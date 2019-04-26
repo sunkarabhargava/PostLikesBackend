@@ -7,7 +7,7 @@ router.post('/addposts',function (req, res) {
   const post = new Posts({ posttext,userid,createdAt });
   post.save(function (err) {
     if (err) {
-      return res.status(422).send({ errors: normalizeErrors(err.errors) });
+      return res.status(422).send({'message':'Could not Add post'});
     }
 
     return res.json({ 'status': true, 'message': 'Post has been Added' });
@@ -19,7 +19,7 @@ router.get('/getPosts', function(req, res) {
     .exec(function(err, foundPosts) {
 
     if (err) {
-      return res.status(422).send({errors: normalizeErrors(err.errors)});
+      return res.status(422).send({'message':'Couldnt get posts'});
     }
 
     return res.json(foundPosts);
@@ -31,7 +31,7 @@ router.put('/updatelikes', function (req, res) {
   Posts.findById({ _id: req.body._id }).exec(function (err, foundroutes) {
     Posts.update({ _id: req.body._id }, newdata, { new: true }, function (err) {
       if (err) {
-        return res.status(422).send({ errors: normalizeErrors(err.errors) });
+        return res.status(422).send({'message':'Could not update likes'});
       }
       return res.json('success');
     });
